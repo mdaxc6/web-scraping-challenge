@@ -3,12 +3,22 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import requests
+import pymongo
 
 # URLs
 news_url = 'https://mars.nasa.gov/news/'
 facts_url = 'https://space-facts.com/mars/'
 jpl_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html'
 hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+
+# setup mongo connection
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
+
+# connect to mongo db and collection
+db = client.planets
+db.mars.drop()
+mars = db.mars
 
 def scrape():
 
@@ -56,6 +66,4 @@ def scrape():
 
     return mars_dict
 
-
-print(scrape())
 
